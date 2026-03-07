@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoFee-Music</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+    <div class="app-container">
+        <header style="display: flex; justify-content: center; align-items: flex-start; width: 100%;">
+            <div style="text-align: center;">
+                <h1>NoFee-<span class="highlight">Music</span></h1>
+                <p>Binaural Brainwave Entrainment</p>
+            </div>
+        </header>
+
+        <div class="visualizer-container">
+            <div class="orb" id="visualizer-orb">
+                <div class="orb-inner"></div>
+            </div>
+        </div>
+
+        <button id="hypnotize-btn" class="hypnotize-btn" data-tooltip="Full-screen immersive experience">
+            <i class="fas fa-eye"></i>
+        </button>
+
+        <div class="modes-container" id="mode-buttons">
+            <div class="hypno-tab" data-tooltip="Select frequency mode"><i class="fas fa-brain"></i></div>
+            <button class="mode-btn active" data-mode="focus" data-tooltip="Enhance concentration with 15Hz Beta waves">
+                <i class="fas fa-brain"></i>
+                <span>Focus<br><small>15Hz Beta</small></span>
+            </button>
+            <button class="mode-btn" data-mode="relax" data-tooltip="Reduce stress with 10Hz Alpha waves">
+                <i class="fas fa-leaf"></i>
+                <span>Relax<br><small>10Hz Alpha</small></span>
+            </button>
+            <button class="mode-btn" data-mode="sleep" data-tooltip="Induce deep rest with 3Hz Delta waves">
+                <i class="fas fa-moon"></i>
+                <span>Sleep<br><small>3Hz Delta</small></span>
+            </button>
+        </div>
+
+        <div class="controls-card glass-panel" id="main-panel">
+            <button id="settings-toggle" class="settings-btn" data-tooltip="Customize audio levels and session time">
+                <i class="fas fa-cog"></i>
+            </button>
+            <button id="effects-toggle" class="settings-btn" style="left: 1.5rem; right: auto;"
+                data-tooltip="Toggle Ambient Sounds">
+                <i class="fas fa-cloud-moon"></i>
+            </button>
+
+            <div class="controls-far-left" id="effects-drawer">
+                <div class="hypno-tab" data-tooltip="Ambient sounds"><i class="fas fa-wind"></i></div>
+                <div class="drawer-header">
+                    <h2 style="font-size: 1.2rem; margin: 0; font-weight: 500;">Ambiance</h2>
+                    <button id="master-ambiance-toggle" class="mini-toggle-btn"
+                        data-tooltip="Toggle all ambient sounds">
+                        <i class="fas fa-power-off"></i>
+                    </button>
+                </div>
+                <div class="volume-controls ambiance-grid">
+                    <div class="control-row">
+                        <label for="env-rain" data-tooltip="Volume of Rain"><i class="fas fa-cloud-rain"></i>
+                            Rain</label>
+                        <input type="range" class="env-slider" id="env-rain" data-effect="rain" min="0" max="1"
+                            step="0.01" value="0">
+                    </div>
+                    <div class="control-row">
+                        <label for="env-thunder" data-tooltip="Volume of Thunderstorm"><i class="fas fa-bolt"></i>
+                            Thunder</label>
+                        <input type="range" class="env-slider" id="env-thunder" data-effect="thunder" min="0" max="1"
+                            step="0.01" value="0">
+                    </div>
+                    <div class="control-row">
+                        <label for="env-wind" data-tooltip="Volume of Wind"><i class="fas fa-wind"></i> Wind</label>
+                        <input type="range" class="env-slider" id="env-wind" data-effect="wind" min="0" max="1"
+                            step="0.01" value="0">
+                    </div>
+                    <div class="control-row">
+                        <label for="env-river" data-tooltip="Volume of flowing River"><i class="fas fa-water"></i>
+                            River</label>
+                        <input type="range" class="env-slider" id="env-river" data-effect="river" min="0" max="1"
+                            step="0.01" value="0">
+                    </div>
+                    <div class="control-row">
+                        <label for="env-space" data-tooltip="Deep Space Drone"><i class="fas fa-meteor"></i>
+                            Space</label>
+                        <input type="range" class="env-slider" id="env-space" data-effect="space" min="0" max="1"
+                            step="0.01" value="0">
+                    </div>
+                    <div class="control-row">
+                        <label for="env-ocean" data-tooltip="Volume of Ocean waves"><i class="fas fa-water"></i>
+                            Ocean</label>
+                        <input type="range" class="env-slider" id="env-ocean" data-effect="ocean" min="0" max="1"
+                            step="0.01" value="0">
+                    </div>
+                    <div class="control-row">
+                        <label for="env-fire" data-tooltip="Volume of Fireplace"><i class="fas fa-fire"></i>
+                            Fire</label>
+                        <input type="range" class="env-slider" id="env-fire" data-effect="fire" min="0" max="1"
+                            step="0.01" value="0">
+                    </div>
+                    <div class="control-row smart-cycle-row">
+                        <label class="toggle-container"
+                            data-tooltip="Automatically fade and cycle through environments">
+                            <span class="toggle-label"><i class="fas fa-sync-alt"></i> Smart Cycle</span>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="smart-cycle-toggle" checked>
+                                <span class="toggle-slider"></span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-left">
+                <div class="hypno-tab" data-tooltip="Control audio playback"><i class="fas fa-play"></i></div>
+                <div class="meta-container" style="text-align: center; margin-bottom: 1.2rem;">
+                    <h3 id="meta-title"
+                        style="font-size: 1.4rem; color: var(--text-primary); font-weight: 600; margin-bottom: 4px;">
+                        Select a mode</h3>
+                    <p id="meta-tags" style="font-size: 0.9rem; color: var(--text-secondary); font-style: italic;">
+                        NoFee Creation Team</p>
+                </div>
+
+                <div class="playback-controls">
+                    <button id="shuffle-btn" class="secondary-btn active" data-tooltip="Play tracks in random order">
+                        <i class="fas fa-random"></i>
+                    </button>
+                    <button id="prev-btn" class="secondary-btn" data-tooltip="Go back to the last track">
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                    <button id="play-btn" class="primary-btn pulse-anim" data-tooltip="Start or stop the audio session">
+                        <i class="fas fa-play" id="play-icon"></i>
+                    </button>
+                    <button id="next-btn" class="secondary-btn" data-tooltip="Skip to the next track">
+                        <i class="fas fa-step-forward"></i>
+                    </button>
+                    <button id="loop-btn" class="secondary-btn" data-tooltip="Repeat the current track indefinitely">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+
+                <div class="progress-container">
+                    <span id="time-current">0:00</span>
+                    <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.1">
+                    <span id="time-total">0:00</span>
+                </div>
+
+                <div class="status-indicator" style="margin-top: 1.5rem;">
+                    <div class="status-dot"></div>
+                    <span id="status-text">Ready to Start</span>
+                </div>
+            </div>
+
+            <div class="controls-right" id="settings-drawer">
+                <div class="hypno-tab" data-tooltip="Adjust audio settings"><i class="fas fa-sliders-h"></i></div>
+                <h2 style="font-size: 1.2rem; margin-bottom: 1.5rem; font-weight: 500;">Settings</h2>
+                <div class="volume-controls">
+                    <div class="control-row">
+                        <label for="master-volume" data-tooltip="Overall volume level of the application"><i
+                                class="fas fa-volume-up"></i> Master</label>
+                        <input type="range" id="master-volume" min="0" max="1" step="0.01" value="0.7">
+                    </div>
+                    <div class="control-row">
+                        <label for="binaural-volume" data-tooltip="Intensity of the binaural brainwave effect"><i
+                                class="fas fa-wave-square"></i> Entrainment</label>
+                        <input type="range" id="binaural-volume" min="0" max="1" step="0.01" value="0.3">
+                    </div>
+                    <div class="control-row">
+                        <label for="music-volume" data-tooltip="Volume of the background lo-fi music"><i
+                                class="fas fa-music"></i> Music</label>
+                        <input type="range" id="music-volume" min="0" max="1" step="0.01" value="0.7">
+                    </div>
+                    <div class="control-row">
+                        <label for="tremolo-depth" data-tooltip="Strength of the neural volume modulation"><i
+                                class="fas fa-water"></i> Tremolo Depth</label>
+                        <input type="range" id="tremolo-depth" min="0" max="1" step="0.01" value="0.5">
+                    </div>
+                    <div class="control-row">
+                        <label for="session-time" data-tooltip="Set a timer to stop playback automatically"><i
+                                class="fas fa-hourglass-half"></i> Session</label>
+                        <input type="range" id="session-time" min="0" max="120" step="5" value="0">
+                        <span id="session-val"
+                            style="width: 50px; text-align: right; font-size: 0.8rem;">Infinite</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
