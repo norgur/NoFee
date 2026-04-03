@@ -9,6 +9,13 @@ const FRONTEND_DIR = path.join(__dirname, '..', 'frontend');
 
 const VALID_MOODS = ['focus', 'relax', 'sleep'];
 
+// Service worker must be served with Service-Worker-Allowed header
+// so it can control requests from the root scope
+app.get('/sw.js', (req, res) => {
+    res.setHeader('Service-Worker-Allowed', '/');
+    res.sendFile(path.join(FRONTEND_DIR, 'sw.js'));
+});
+
 // Serve static frontend files (HTML, CSS, JS, lofi-track.mp3)
 app.use(express.static(FRONTEND_DIR));
 
