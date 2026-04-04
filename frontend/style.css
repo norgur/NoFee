@@ -1064,13 +1064,14 @@ input[type="range"]::-moz-range-thumb {
         font-size: 0.6rem;
     }
 
-    /* Glass panel: full width, vertical stack */
+    /* Glass panel: full width, relative so drawers can overlay */
     .glass-panel {
         min-width: unset;
         width: 100%;
         flex-direction: column;
         padding: 1.2rem 1rem;
         border-radius: 24px;
+        overflow: hidden;
     }
 
     .controls-left {
@@ -1082,27 +1083,52 @@ input[type="range"]::-moz-range-thumb {
         margin-bottom: 0.5rem;
     }
 
+    /* Drawers: slide in as overlays over the controls-left */
+    .controls-right,
+    .controls-far-left {
+        position: absolute;
+        inset: 0;
+        width: 100% !important;
+        opacity: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: var(--card-bg);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: none !important;
+        border-radius: 24px;
+        padding: 1.2rem 1rem !important;
+        margin: 0 !important;
+        max-height: none !important;
+        order: 0;
+        pointer-events: none;
+    }
+
+    .controls-right {
+        transform: translateX(100%);
+        transition: transform 0.35s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.2s ease;
+    }
+
+    .controls-far-left {
+        transform: translateX(-100%);
+        transition: transform 0.35s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.2s ease;
+    }
+
+    .glass-panel.settings-open .controls-right {
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .glass-panel.effects-open .controls-far-left {
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
     .glass-panel.settings-open,
     .glass-panel.effects-open {
         padding: 1.2rem 1rem;
-    }
-
-    /* Drawers stack vertically below controls */
-    .glass-panel.settings-open .controls-right,
-    .glass-panel.effects-open .controls-far-left {
-        width: 100%;
-        margin: 1rem 0 0 0;
-        padding: 1rem 0 0 0;
-        border-left: none;
-        border-right: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        max-height: none;
-        overflow-y: visible;
-    }
-
-    /* Effects drawer should appear BELOW playback on mobile */
-    .controls-far-left {
-        order: 1;
     }
 
     /* Hypnotize mode: back to fixed viewport */
@@ -1120,7 +1146,9 @@ input[type="range"]::-moz-range-thumb {
         margin-left: -45vw;
         padding: 1.5rem;
         border-radius: 20px;
-        border: 1px solid var(--card-border);
+        border: 1px solid var(--card-border) !important;
+        position: fixed;
+        inset: auto;
     }
 
     body.hypnotize-mode .controls-right,
