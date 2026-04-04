@@ -471,29 +471,13 @@ header p {
     display: flex;
     flex-direction: column;
     gap: 1.1rem;
-    max-height: 100%;
-    overflow-y: auto;
-    padding-right: 0.5rem;
-}
-
-.volume-controls::-webkit-scrollbar {
-    width: 4px;
-}
-
-.volume-controls::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.volume-controls::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
 }
 
 /* Ambiance Grid Layout */
 .ambiance-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.8rem 0.6rem !important;
+    display: flex !important;
+    flex-direction: column;
+    gap: 0.8rem;
     width: 100%;
 }
 
@@ -1056,10 +1040,6 @@ input[type="range"]::-moz-range-thumb {
         border-left: none;
         border-right: none;
         border-top: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .ambiance-grid {
-        grid-template-columns: 1fr;
     }
 
     /* Fixed side panels for hypnotize mode on mobile */
