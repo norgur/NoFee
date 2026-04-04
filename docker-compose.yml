@@ -1,6 +1,6 @@
 services:
   nofee-music:
-    build: .
+    image: ghcr.io/norgur/nofee:latest
     ports:
       - "3000:3000"
     volumes:
