@@ -288,21 +288,14 @@ class NeuralAudioEngine {
     }
 
     async syncPlaylist() {
-        console.log("Syncing playlist. Tauri detected:", !!window.__TAURI__);
         try {
-            if (window.__TAURI__) {
-                const data = await window.__TAURI__.core.invoke('get_playlist', { mood: this.currentMode });
-                console.log("Tauri data received:", data);
-                this.playlist = data.tracks.map(t => ({
-                    ...t,
-                    url: window.__TAURI__.core.convertFileSrc(t.url)
-                })) || [];
-            } else {
-                console.error("No Tauri environment detected. Offline mode only.");
-                this.playlist = [];
-            }
+            const response = await fetch(`/api/playlist?mood=${encodeURIComponent(this.currentMode)}`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            this.playlist = data.tracks || [];
         } catch (err) {
             console.error("Failed to sync playlist", err);
+            this.playlist = [];
         }
     }
 
