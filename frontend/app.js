@@ -850,7 +850,29 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.env-slider').forEach(slider => {
         slider.addEventListener('input', e => {
             const effectName = e.target.getAttribute('data-effect');
-            engine.setEffectVolume(effectName, parseFloat(e.target.value));
+            const val = parseFloat(e.target.value);
+            engine.setEffectVolume(effectName, val);
+            const btn = document.querySelector(`.effect-toggle-btn[data-effect="${effectName}"]`);
+            if (btn) btn.classList.toggle('active', val > 0);
+        });
+    });
+
+    document.querySelectorAll('.effect-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const effectName = btn.getAttribute('data-effect');
+            const slider = document.querySelector(`.env-slider[data-effect="${effectName}"]`);
+            const currentVol = engine.effects[effectName].sliderVol;
+            if (currentVol > 0) {
+                btn._savedVol = currentVol;
+                engine.setEffectVolume(effectName, 0);
+                slider.value = 0;
+                btn.classList.remove('active');
+            } else {
+                const vol = btn._savedVol || 0.5;
+                engine.setEffectVolume(effectName, vol);
+                slider.value = vol;
+                btn.classList.add('active');
+            }
         });
     });
 
