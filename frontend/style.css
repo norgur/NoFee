@@ -221,10 +221,27 @@ header p {
     border-left: 1px solid rgba(255, 255, 255, 0.05);
     padding-left: 2.5rem;
     margin-left: 2.5rem;
+    max-height: 75vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.glass-panel.settings-open .controls-right::-webkit-scrollbar {
+    display: none;
 }
 
 .glass-panel.effects-open {
     padding-left: 2.5rem;
+}
+
+.glass-panel.effects-open .controls-far-left {
+    max-height: 75vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.glass-panel.effects-open .controls-far-left::-webkit-scrollbar {
+    display: none;
 }
 
 .glass-panel.effects-open .controls-far-left {
