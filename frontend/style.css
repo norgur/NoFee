@@ -410,6 +410,7 @@ header p {
     border-radius: 2px;
     outline: none;
     cursor: pointer;
+    overflow: hidden;
 }
 
 #progress-bar::-webkit-slider-thumb {
@@ -502,13 +503,33 @@ header p {
     gap: 0.5rem;
 }
 
-.ambiance-grid .control-row label {
-    width: 80px;
-    font-size: 0.85rem;
-    white-space: nowrap;
+.effect-toggle-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 8px;
+    cursor: pointer;
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 0.4rem;
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+}
+
+.effect-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+.effect-toggle-btn.active {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 8px var(--accent-glow);
 }
 
 .ambiance-grid .control-row input[type="range"] {
@@ -621,12 +642,23 @@ input[type="range"] {
     flex: 1;
     -webkit-appearance: none;
     appearance: none;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 3px;
+    height: 24px;
+    background: transparent;
     outline: none;
-    overflow: hidden;
-    /* For custom fill effect if needed, though simple track is fine */
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+}
+
+input[type="range"]::-moz-range-track {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    border: none;
 }
 
 /* Hypnotize Button */
@@ -908,18 +940,27 @@ body.hypnotize-mode .playback-controls {
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 14px;
-    height: 14px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     background: var(--text-primary);
     cursor: pointer;
+    margin-top: -7px;
     transition: all 0.2s;
-    box-shadow: -400px 0 0 400px var(--accent-glow);
-    /* Simple progress trick */
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
     transform: scale(1.3);
+    background: var(--accent);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    border: none;
+    cursor: pointer;
 }
 
 /* Custom Tooltip Styling */
