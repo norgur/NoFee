@@ -9,3 +9,14 @@ services:
       - PORT=3000
       - MUSIC_DIR=/music
     restart: unless-stopped
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "nofee-music"
+      tsdproxy.container_port: "3000"
+    networks:
+      - default
+      - tsdproxy
+
+networks:
+  tsdproxy:
+    external: true
