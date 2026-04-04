@@ -221,6 +221,13 @@ header p {
     border-left: 1px solid rgba(255, 255, 255, 0.05);
     padding-left: 2.5rem;
     margin-left: 2.5rem;
+    max-height: 75vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.glass-panel.settings-open .controls-right::-webkit-scrollbar {
+    display: none;
 }
 
 .glass-panel.effects-open {
@@ -233,6 +240,13 @@ header p {
     border-right: 1px solid rgba(255, 255, 255, 0.05);
     padding-right: 2.5rem;
     margin-right: 2.5rem;
+    max-height: 75vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.glass-panel.effects-open .controls-far-left::-webkit-scrollbar {
+    display: none;
 }
 
 .modes-container {
@@ -990,33 +1004,74 @@ input[type="range"]::-moz-range-thumb {
 
 /* --- Mobile Responsive Rules --- */
 @media (max-width: 768px) {
-    .app-container {
-        padding: 1rem;
-        gap: 0.8rem;
+    body {
+        overflow-y: auto;
+        align-items: flex-start;
     }
 
-    /* Stack buttons */
+    .app-container {
+        padding: 1rem;
+        gap: 0.6rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    header p {
+        font-size: 0.7rem;
+    }
+
+    /* Shrink visualizer */
+    .visualizer-container {
+        width: 120px;
+        height: 120px;
+        margin: 0;
+    }
+
+    .orb, .orb:last-of-type {
+        width: 90px;
+        height: 90px;
+    }
+
+    .hypnotize-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+        top: 0.8rem;
+        right: 0.8rem;
+    }
+
+    /* Mode buttons */
     .modes-container {
-        flex-wrap: wrap;
-        gap: 0.5rem;
+        flex-wrap: nowrap;
+        gap: 0.4rem;
     }
 
     .mode-btn {
-        flex: 1 1 30%;
+        flex: 1;
         max-width: none;
-        padding: 0.6rem;
+        padding: 0.5rem 0.3rem;
+        font-size: 0.8rem;
+        border-radius: 14px;
     }
 
     .mode-btn i {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
-    /* Panels */
+    .mode-btn small {
+        font-size: 0.6rem;
+    }
+
+    /* Glass panel: full width, relative so drawers can overlay */
     .glass-panel {
         min-width: unset;
         width: 100%;
         flex-direction: column;
-        padding: 1.5rem 1rem;
+        padding: 1.2rem 1rem;
+        border-radius: 24px;
+        overflow: hidden;
     }
 
     .controls-left {
@@ -1024,25 +1079,64 @@ input[type="range"]::-moz-range-thumb {
         width: 100%;
     }
 
-    .glass-panel.settings-open {
-        padding: 1.5rem 1rem;
+    .status-indicator {
+        margin-bottom: 0.5rem;
     }
 
-    .glass-panel.effects-open {
-        padding: 1.5rem 1rem;
+    /* Drawers: slide in as overlays over the controls-left */
+    .controls-right,
+    .controls-far-left {
+        position: absolute;
+        inset: 0;
+        width: 100% !important;
+        opacity: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: var(--card-bg);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: none !important;
+        border-radius: 24px;
+        padding: 1.2rem 1rem !important;
+        margin: 0 !important;
+        max-height: none !important;
+        order: 0;
+        pointer-events: none;
     }
 
-    .glass-panel.settings-open .controls-right,
+    .controls-right {
+        transform: translateX(100%);
+        transition: transform 0.35s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.2s ease;
+    }
+
+    .controls-far-left {
+        transform: translateX(-100%);
+        transition: transform 0.35s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.2s ease;
+    }
+
+    .glass-panel.settings-open .controls-right {
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
     .glass-panel.effects-open .controls-far-left {
-        width: 100%;
-        margin: 1.5rem 0 0 0;
-        padding: 1.5rem 0 0 0;
-        border-left: none;
-        border-right: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: auto;
     }
 
-    /* Fixed side panels for hypnotize mode on mobile */
+    .glass-panel.settings-open,
+    .glass-panel.effects-open {
+        padding: 1.2rem 1rem;
+    }
+
+    /* Hypnotize mode: back to fixed viewport */
+    body.hypnotize-mode {
+        overflow: hidden;
+        align-items: center;
+    }
+
     body.hypnotize-mode .controls-left,
     body.hypnotize-mode .controls-right,
     body.hypnotize-mode .controls-far-left {
@@ -1050,20 +1144,19 @@ input[type="range"]::-moz-range-thumb {
         max-width: 400px;
         left: 50%;
         margin-left: -45vw;
-        /* center */
         padding: 1.5rem;
         border-radius: 20px;
-        border: 1px solid var(--card-border);
+        border: 1px solid var(--card-border) !important;
+        position: fixed;
+        inset: auto;
     }
 
     body.hypnotize-mode .controls-right,
     body.hypnotize-mode .controls-far-left {
         margin-left: -45vw;
-        /* override right margin/padding from desktop */
         right: auto;
     }
 
-    /* Center the toggle tabs on mobile */
     body.hypnotize-mode .modes-container {
         left: 50%;
         transform: translate(-50%, -100%);

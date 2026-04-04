@@ -960,6 +960,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     attachTooltips();
 
+    // On touch devices, mouseleave never fires — hide tooltip on any touch
+    document.addEventListener('touchstart', hideTooltip, { passive: true });
+
     // Some buttons might be dynamic or change attributes, but for now static is fine.
     // If the play button text changes (it doesn't, but icon does), we might want to update tooltip text.
     // However, the current prompt just asks for explanations on all buttons.

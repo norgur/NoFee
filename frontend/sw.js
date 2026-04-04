@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nofee-music-v1';
+const CACHE_NAME = 'nofee-music-v2';
 
 // Static assets to cache on install
 const PRECACHE_URLS = [
